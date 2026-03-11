@@ -36,8 +36,8 @@ export default defineConfig({
     ],
     publicDir: resolve('resources'),
     server: {
-      host: '0.0.0.0',
-      port: 2389
+      host: '127.0.0.1',
+      port: 8080
     }
   }
 });
