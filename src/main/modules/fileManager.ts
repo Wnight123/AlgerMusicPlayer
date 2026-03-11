@@ -743,14 +743,12 @@ async function downloadMusic(
     } else if (['.flac'].includes(fileFormat)) {
       try {
         const tagMap: FlacTagMap = {
-          TITLE: songInfo?.name,
+          TITLE: songInfo?.name || '',
           ARTIST: artistNames,
           ALBUM: songInfo?.al?.name || songInfo?.song?.album?.name || songInfo?.name || filename,
           LYRICS: lyricsContent || '',
-          TRACKNUMBER: songInfo?.no ? String(songInfo.no) : undefined,
-          DATE: songInfo?.publishTime
-            ? new Date(songInfo.publishTime).getFullYear().toString()
-            : undefined
+          TRACKNUMBER: songInfo?.no ? String(songInfo.no) : '',
+          DATE: songInfo?.publishTime ? new Date(songInfo.publishTime).getFullYear().toString() : ''
         };
 
         await writeFlacTags(
