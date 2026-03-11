@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { cloneDeep } from 'lodash';
 import { darkTheme, lightTheme } from 'naive-ui';
-import { computed, nextTick, onMounted, watch } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -27,7 +27,7 @@ import { useUserStore } from '@/store/modules/user';
 import { isElectron, isLyricWindow } from '@/utils';
 import { checkLoginStatus } from '@/utils/auth';
 
-import { initAudioListeners, initMusicHook } from './hooks/MusicHook';
+import { cleanupMusicHook, initAudioListeners, initMusicHook } from './hooks/MusicHook';
 import { audioService } from './services/audioService';
 import { initLxMusicRunner } from './services/LxMusicSourceRunner';
 import { isMobile } from './utils';
@@ -154,6 +154,11 @@ onMounted(async () => {
   }
 
   audioService.releaseOperationLock();
+});
+
+// 在组件卸载时清理资源
+onUnmounted(() => {
+  cleanupMusicHook();
 });
 </script>
 

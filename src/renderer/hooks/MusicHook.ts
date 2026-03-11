@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { createDiscreteApi } from 'naive-ui';
-import { computed, type ComputedRef, nextTick, onUnmounted, ref, watch } from 'vue';
+import { computed, type ComputedRef, nextTick, ref, watch } from 'vue';
 
 import useIndexedDB from '@/hooks/IndexDBHook';
 import { audioService } from '@/services/audioService';
@@ -945,10 +945,10 @@ const setupPlayStateWatcher = () => {
   );
 };
 
-// 在组件卸载时清理资源
-onUnmounted(() => {
+// 清理函数，供调用方在组件卸载时调用
+export const cleanupMusicHook = () => {
   stopLyricSync();
-});
+};
 
 // 导出歌词解析函数供外部使用
 export { parseLyricsString };
